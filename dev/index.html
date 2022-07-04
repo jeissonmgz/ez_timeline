@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>&lt;my-element> Demo</title>
+    <script src="../node_modules/@webcomponents/webcomponentsjs/webcomponents-loader.js"></script>
+    <script src="../node_modules/lit/polyfill-support.js"></script>
+    <script type="module" src="../build/my-element.js"></script>
+    <script type="module" src="../build/ez-timeline.js"></script>
+    <script type="module" src="../build/ez-event-line.js"></script>
+    <style>
+      p {
+        border: solid 1px blue;
+        padding: 8px;
+      }
+    </style>
+  </head>
+  <body>
+    <my-element>
+      <p>This is child content</p>
+    </my-element>
+    <ez-timeline start="1986">
+      <ez-timeline-path collapsed>
+        <ez-timeline-item start="1990" end="1992"><span>2</span></ez-timeline-item>
+        <ez-timeline-item start="1986" end="1990">1</ez-timeline-item>
+        <ez-timeline-item start="1993" end="1994">3</ez-timeline-item>
+        <ez-timeline-item start="1998" end="2000">4</ez-timeline-item>
+      </ez-timeline-path>
+      <ez-timeline-path>
+        <ez-timeline-item start="1990" end="1992"><span>2</span></ez-timeline-item>
+        <ez-timeline-item start="1986" end="1990">1</ez-timeline-item>
+        <ez-timeline-item start="1993" end="1994">3</ez-timeline-item>
+        <ez-timeline-item start="1998" end="2000">4</ez-timeline-item>
+      </ez-timeline-path>
+    </ez-timeline>
+  </body>
+</html>
