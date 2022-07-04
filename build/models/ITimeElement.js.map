@@ -1,1 +1,0 @@
-{"version":3,"file":"ITimeElement.js","sourceRoot":"","sources":["../../src/models/ITimeElement.ts"],"names":[],"mappings":"","sourcesContent":["export interface ITimeElement {\r\n    from: number;\r\n    to: number;\r\n    step: number;\r\n}"]}
