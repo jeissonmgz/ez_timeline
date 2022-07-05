@@ -4,156 +4,46 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/ez-timeline.ts",
-      "declarations": [
+      "path": "src/index.ts",
+      "declarations": [],
+      "exports": [
         {
-          "kind": "class",
-          "description": "Timeline",
-          "name": "EzTimeline",
-          "members": [
-            {
-              "kind": "field",
-              "name": "start",
-              "type": {
-                "text": "number"
-              },
-              "default": "1990",
-              "attribute": "start",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "end",
-              "type": {
-                "text": "number"
-              },
-              "default": "2000",
-              "attribute": "end",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "step",
-              "type": {
-                "text": "number"
-              },
-              "default": "2",
-              "attribute": "step",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "timelines",
-              "type": {
-                "text": "ITimelineItem[][]"
-              },
-              "default": "[]",
-              "attribute": "timelines"
-            },
-            {
-              "kind": "method",
-              "name": "itemTemplate",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "item",
-                  "type": {
-                    "text": "ITimelineItem"
-                  }
-                },
-                {
-                  "name": "index",
-                  "type": {
-                    "text": "number"
-                  }
-                },
-                {
-                  "name": "isCollapsed",
-                  "type": {
-                    "text": "boolean"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "pathTemplate",
-              "return": {
-                "type": {
-                  "text": "TemplateResult"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "path",
-                  "type": {
-                    "text": "ITimeLinePath"
-                  }
-                }
-              ]
-            }
-          ],
-          "attributes": [
-            {
-              "name": "start",
-              "type": {
-                "text": "number"
-              },
-              "default": "1990",
-              "fieldName": "start"
-            },
-            {
-              "name": "end",
-              "type": {
-                "text": "number"
-              },
-              "default": "2000",
-              "fieldName": "end"
-            },
-            {
-              "name": "step",
-              "type": {
-                "text": "number"
-              },
-              "default": "2",
-              "fieldName": "step"
-            },
-            {
-              "name": "timelines",
-              "type": {
-                "text": "ITimelineItem[][]"
-              },
-              "default": "[]",
-              "fieldName": "timelines"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "ez-timeline",
-          "customElement": true
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./components"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./models"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "*",
+          "declaration": {
+            "name": "*",
+            "package": "./utils"
+          }
         }
-      ],
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/index.ts",
+      "declarations": [],
       "exports": [
         {
           "kind": "js",
           "name": "EzTimeline",
           "declaration": {
             "name": "EzTimeline",
-            "module": "src/ez-timeline.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "name": "ez-timeline",
-          "declaration": {
-            "name": "EzTimeline",
-            "module": "src/ez-timeline.ts"
+            "module": "./timeline/ez-timeline"
           }
         }
       ]
@@ -354,6 +244,162 @@
           "declaration": {
             "name": "getTimelinePaths",
             "module": "src/utils/index.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/components/timeline/ez-timeline.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Timeline",
+          "name": "EzTimeline",
+          "members": [
+            {
+              "kind": "field",
+              "name": "start",
+              "type": {
+                "text": "number"
+              },
+              "default": "1990",
+              "attribute": "start",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "end",
+              "type": {
+                "text": "number"
+              },
+              "default": "2000",
+              "attribute": "end",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "step",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "attribute": "step",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "timelines",
+              "type": {
+                "text": "ITimelineItem[][]"
+              },
+              "default": "[]",
+              "attribute": "timelines"
+            },
+            {
+              "kind": "method",
+              "name": "itemTemplate",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "ITimelineItem"
+                  }
+                },
+                {
+                  "name": "index",
+                  "type": {
+                    "text": "number"
+                  }
+                },
+                {
+                  "name": "isCollapsed",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "pathTemplate",
+              "return": {
+                "type": {
+                  "text": "TemplateResult"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "path",
+                  "type": {
+                    "text": "ITimeLinePath"
+                  }
+                }
+              ]
+            }
+          ],
+          "attributes": [
+            {
+              "name": "start",
+              "type": {
+                "text": "number"
+              },
+              "default": "1990",
+              "fieldName": "start"
+            },
+            {
+              "name": "end",
+              "type": {
+                "text": "number"
+              },
+              "default": "2000",
+              "fieldName": "end"
+            },
+            {
+              "name": "step",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "fieldName": "step"
+            },
+            {
+              "name": "timelines",
+              "type": {
+                "text": "ITimelineItem[][]"
+              },
+              "default": "[]",
+              "fieldName": "timelines"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "ez-timeline",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "EzTimeline",
+          "declaration": {
+            "name": "EzTimeline",
+            "module": "src/components/timeline/ez-timeline.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "ez-timeline",
+          "declaration": {
+            "name": "EzTimeline",
+            "module": "src/components/timeline/ez-timeline.ts"
           }
         }
       ]
