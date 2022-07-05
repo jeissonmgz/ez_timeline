@@ -1,13 +1,11 @@
 import {LitElement, html, TemplateResult} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import { ITimelineItem, ITimeLinePath } from './models';
-import { getTimelineItemStyle, getTimelinePaths, getTimelinePathStyle } from './utils';
+import { ITimelineItem, ITimeLinePath } from '../../models';
+import { getTimelineItemStyle, getTimelinePaths, getTimelinePathStyle } from '../../utils';
 
 /**
 * Timeline
 *
-* @fires count-changed - Indicates when the count changes
-* @slot - Children
 */
 @customElement('ez-timeline')
 export class EzTimeline extends LitElement {
