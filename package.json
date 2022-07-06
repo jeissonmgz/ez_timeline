@@ -3,8 +3,16 @@
   "private": false,
   "version": "0.0.1",
   "description": "Generate timelines",
-  "main": "npm start",
-  "module": "build/ez-timeline.js",
+  "main": "dist/timeline.js", 
+  "repository": {    
+    "type": "git",    
+    "url": "git+https://github.com/jeissonmgz/ez_timeline.git"
+  },
+  "bugs": {    
+    "url": "https://github.com/jeissonmgz/ez_timeline/issues"  
+  },  
+  "homepage": "https://github.com/jeissonmgz/ez_timeline#readme",
+  "module": "dist/timeline.js",
   "scripts": {
     "start": "web-dev-server",
     "build": "rimraf dist && rimraf build && npm run build:ts && rollup -c && cp dist/timeline-dist.js dev/test/timeline-dist.js",
