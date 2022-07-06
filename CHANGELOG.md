@@ -1,5 +1,8 @@
 # Timeline
 
+## 0.0.10
+- Add tooltip with dates
+
 ## 0.0.9
 - Last item on timeline with space
 

@@ -1,4 +1,4 @@
-import {LitElement, html, TemplateResult} from 'lit';
+import {LitElement, html, TemplateResult, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {ITimelineItem, ITimeLinePath} from '../../models';
 import {
@@ -26,6 +26,43 @@ export class EzTimeline extends LitElement {
   @property({type: Array})
   timelines: ITimelineItem[][] = [];
 
+  static override styles = css`
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+
+    .tooltip .tooltiptext {
+      visibility: hidden;
+      width: 120px;
+      background-color: black;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px 0;
+      position: absolute;
+      z-index: 1;
+      top: 150%;
+      left: 50%;
+      margin-left: -60px;
+    }
+
+    .tooltip .tooltiptext::after {
+      content: '';
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: transparent transparent black transparent;
+    }
+
+    .tooltip:hover .tooltiptext {
+      visibility: visible;
+    }
+  `;
+
   itemTemplate(
     item: ITimelineItem,
     index: number,
@@ -34,9 +71,9 @@ export class EzTimeline extends LitElement {
     const styles = getTimelineItemStyle(item, this, index, isCollapsed);
     return html`
       <div
-        class="timeline__item"
+        class="timeline__item tooltip"
         style=${styles}
-        .innerHTML="${item.content}"
+        .innerHTML="${item.content}<span class='tooltiptext'>${item.start} - ${item.end}</span>"
       ></div>
     `;
   }
