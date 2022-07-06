@@ -67,13 +67,6 @@ export class EzTimeline extends LitElement {
         )}
       </div>
       ${timelines.map((path) => html` ${this.pathTemplate(path)} `)}
-      <button
-        @click="${() => {
-          this.start = 1980;
-        }}"
-      >
-        cambiar from
-      </button>
     `;
   }
 }
