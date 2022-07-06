@@ -104,7 +104,9 @@ export class EzTimeline extends LitElement {
     for (let i = 0; i < total; i++) {
       indexes = [...indexes, i];
     }
-    console.log(indexes.length);
+    if (this.border === "") {
+      return html``;
+    }
     return html`
       ${indexes.map(
         (i) =>

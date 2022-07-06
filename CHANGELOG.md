@@ -1,5 +1,9 @@
 # Timeline
 
+## 0.0.12
+
+- Remove borders on clear property
+
 ## 0.0.11
 
 - Add orientation in timelines
