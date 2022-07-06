@@ -1,4 +1,9 @@
-import {ITimeElement, ITimelineItem, ITimeLinePath} from '../models';
+import {
+  EOrientationTimeLine,
+  ITimeElement,
+  ITimelineItem,
+  ITimeLinePath,
+} from '../models';
 import {styleMap} from 'lit-html/directives/style-map.js';
 
 export const updateChildrenTimeElement = (
@@ -30,13 +35,28 @@ export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
     };
   });
 
-export const getTimelineItemPath = ({start, end, step}: ITimeElement) =>
+export const countBlocks = ({start, end, step}: ITimeElement) =>
   end - start + 1 + step;
 
-export const getTimelinePathStyle = (timeElement: ITimeElement) =>
+export const countPaths = (timelines: ITimeLinePath[]) => {
+  console.log(timelines);
+  return timelines.reduce(
+    (total, path) => total + (path.collapsed ? 1 : path.timelineItems.length),
+    1
+  );
+};
+
+export const getTimelinePathStyle = (
+  timeElement: ITimeElement,
+  timelines: ITimeLinePath[]
+) =>
   styleMap({
     display: 'grid',
-    gridTemplateColumns: '1fr '.repeat(getTimelineItemPath(timeElement)),
+    gridTemplateColumns: '1fr '.repeat(
+      timeElement.orientation === EOrientationTimeLine.horizontal
+        ? countBlocks(timeElement)
+        : countPaths(timelines)
+    ),
   });
 
 export const getTimelineItemPosition = (start: number, value: number) =>
@@ -44,17 +64,27 @@ export const getTimelineItemPosition = (start: number, value: number) =>
 
 export const getTimelineItemStyle = (
   {start, end, background}: ITimelineItem,
-  {start: begin}: ITimeElement,
-  index: number,
-  isCollapsed: boolean
-) =>
-  styleMap({
-    gridRow: `${isCollapsed ? 1 : index + 1}`,
-    background: background,
-    gridColumn: `${getTimelineItemPosition(begin, start)} / ${
-      getTimelineItemPosition(begin, end) + 1
-    }`,
-  });
+  {start: begin, orientation}: ITimeElement,
+  pathsIndex: number
+) => {
+  const block = `${getTimelineItemPosition(begin, start)} / ${
+    getTimelineItemPosition(begin, end) + 1
+  }`;
+  const path = `${pathsIndex}`;
+  return styleMap(
+    orientation === EOrientationTimeLine.horizontal
+      ? {
+          gridRow: path,
+          background: background,
+          gridColumn: block,
+        }
+      : {
+          gridColumn: path,
+          background: background,
+          gridRow: block,
+        }
+  );
+};
 
 export const getTimelinePaths = (children: HTMLCollection): ITimeLinePath[] => {
   return [...children].map((path) => {
@@ -66,8 +96,23 @@ export const getTimelinePaths = (children: HTMLCollection): ITimeLinePath[] => {
   });
 };
 
-export const getTimeLineScale = (index: number, step: number) =>
-  styleMap({
-    gridRow: `1`,
-    gridColumn: `${index * step + 1} / ${(index + 1) * step + 1}`,
-  });
+export const getTimeLineScale = (
+  index: number,
+  step: number,
+  pathsIndex: number,
+  orientation: EOrientationTimeLine
+) => {
+  const block = `${index * step + 1} / ${(index + 1) * step + 1}`;
+  const path = `${pathsIndex}`;
+  return styleMap(
+    orientation === EOrientationTimeLine.horizontal
+      ? {
+          gridRow: path,
+          gridColumn: block,
+        }
+      : {
+          gridRow: block,
+          gridColumn: path,
+        }
+  );
+};

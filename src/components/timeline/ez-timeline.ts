@@ -1,6 +1,6 @@
 import {LitElement, html, TemplateResult, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {ITimelineItem, ITimeLinePath} from '../../models';
+import {EOrientationTimeLine, ITimelineItem, ITimeLinePath} from '../../models';
 import {
   getTimelineItemStyle,
   getTimelinePaths,
@@ -14,6 +14,9 @@ import {
  */
 @customElement('ez-timeline')
 export class EzTimeline extends LitElement {
+  @property({type: String, reflect: true})
+  orientation: EOrientationTimeLine = EOrientationTimeLine.horizontal;
+
   @property({type: Number, reflect: true})
   start = 1990;
 
@@ -25,6 +28,8 @@ export class EzTimeline extends LitElement {
 
   @property({type: Array})
   timelines: ITimelineItem[][] = [];
+
+  pathsIndex: number = 1;
 
   static override styles = css`
     .tooltip {
@@ -63,12 +68,11 @@ export class EzTimeline extends LitElement {
     }
   `;
 
-  itemTemplate(
-    item: ITimelineItem,
-    index: number,
-    isCollapsed: boolean
-  ): TemplateResult {
-    const styles = getTimelineItemStyle(item, this, index, isCollapsed);
+  itemTemplate(item: ITimelineItem, isCollapsed: boolean): TemplateResult {
+    if (!isCollapsed) {
+      this.pathsIndex++;
+    }
+    const styles = getTimelineItemStyle(item, this, this.pathsIndex);
     return html`
       <div
         class="timeline__item tooltip"
@@ -79,15 +83,15 @@ export class EzTimeline extends LitElement {
   }
 
   pathTemplate(path: ITimeLinePath): TemplateResult {
-    const styles = getTimelinePathStyle(this);
+    if (path.collapsed) {
+      this.pathsIndex++;
+    } else {
+      //this.pathsIndex--;
+    }
     return html`
-      <div class="timeline__scale" style=${styles}>
-        ${path.timelineItems.map(
-          (item, index) => html`
-            ${this.itemTemplate(item, index, path.collapsed)}
-          `
-        )}
-      </div>
+      ${path.timelineItems.map(
+        (item) => html` ${this.itemTemplate(item, path.collapsed)} `
+      )}
     `;
   }
 
@@ -97,19 +101,24 @@ export class EzTimeline extends LitElement {
     for (let i = this.start; i <= this.end; i += this.step) {
       indexes = [...indexes, i];
     }
-    const styles = getTimelinePathStyle(this);
+    const styles = getTimelinePathStyle(this, timelines);
     return html`
       <div class="timeline__scale" style=${styles}>
         ${indexes.map(
           (i, index) => html`<div
             class="timeline__scale_marker"
-            style=${getTimeLineScale(index, this.step)}
+            style=${getTimeLineScale(
+              index,
+              this.step,
+              this.pathsIndex,
+              this.orientation
+            )}
           >
             ${i}
           </div>`
         )}
+        ${timelines.map((path) => html` ${this.pathTemplate(path)} `)}
       </div>
-      ${timelines.map((path) => html` ${this.pathTemplate(path)} `)}
     `;
   }
 }

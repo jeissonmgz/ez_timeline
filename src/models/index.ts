@@ -2,6 +2,7 @@ export interface ITimeElement {
   start: number;
   end: number;
   step: number;
+  orientation: EOrientationTimeLine;
 }
 
 export interface ITimelineItem {
@@ -14,4 +15,9 @@ export interface ITimelineItem {
 export interface ITimeLinePath {
   collapsed: boolean;
   timelineItems: ITimelineItem[];
+}
+
+export enum EOrientationTimeLine {
+  vertical = 'vertical',
+  horizontal = 'horizontal',
 }
