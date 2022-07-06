@@ -3,6 +3,7 @@
 ## 0.0.11
 
 - Add orientation in timelines
+- Add border in timelines
 
 ## 0.0.10
 

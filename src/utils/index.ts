@@ -35,11 +35,22 @@ export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
     };
   });
 
-export const countBlocks = ({start, end, step}: ITimeElement) =>
-  end - start + 1 + step;
+export const countCells = (
+  timeline: ITimeElement,
+  timelines: ITimeLinePath[]
+) => {
+  const blocks =
+    timeline.orientation === EOrientationTimeLine.horizontal
+      ? countBlocks(timeline) + timeline.step
+      : countBlocks(timeline);
+  const paths = countPaths(timelines);
+  const total = blocks * paths;
+  return {blocks, paths, total};
+};
+
+export const countBlocks = ({start, end}: ITimeElement) => end - start + 1;
 
 export const countPaths = (timelines: ITimeLinePath[]) => {
-  console.log(timelines);
   return timelines.reduce(
     (total, path) => total + (path.collapsed ? 1 : path.timelineItems.length),
     1
@@ -54,7 +65,7 @@ export const getTimelinePathStyle = (
     display: 'grid',
     gridTemplateColumns: '1fr '.repeat(
       timeElement.orientation === EOrientationTimeLine.horizontal
-        ? countBlocks(timeElement)
+        ? countBlocks(timeElement) + timeElement.step
         : countPaths(timelines)
     ),
   });
@@ -113,6 +124,33 @@ export const getTimeLineScale = (
       : {
           gridRow: block,
           gridColumn: path,
+        }
+  );
+};
+
+export const getTimelineCellStyle = (
+  total: number,
+  paths: number,
+  blocks: number,
+  orientation: EOrientationTimeLine,
+  border: string
+) => {
+  const styleDefault = {
+    width: '100%',
+    height: '100%',
+    border: `${border}`,
+  };
+  return styleMap(
+    orientation === EOrientationTimeLine.horizontal
+      ? {
+          ...styleDefault,
+          gridColumn: `${(total % blocks) + 1}`,
+          gridRow: `${Math.floor(total / blocks) + 1}`,
+        }
+      : {
+          ...styleDefault,
+          gridColumn: `${(total % paths) + 1}`,
+          gridRow: `${Math.floor(total / paths) + 1}`,
         }
   );
 };

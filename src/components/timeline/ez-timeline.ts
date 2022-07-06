@@ -2,6 +2,8 @@ import {LitElement, html, TemplateResult, css} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {EOrientationTimeLine, ITimelineItem, ITimeLinePath} from '../../models';
 import {
+  countCells,
+  getTimelineCellStyle,
   getTimelineItemStyle,
   getTimelinePaths,
   getTimelinePathStyle,
@@ -26,6 +28,9 @@ export class EzTimeline extends LitElement {
   @property({type: Number, reflect: true})
   step = 2;
 
+  @property({type: String, reflect: true})
+  border = '0.5px dotted lightgray';
+
   @property({type: Array})
   timelines: ITimelineItem[][] = [];
 
@@ -47,7 +52,7 @@ export class EzTimeline extends LitElement {
       padding: 5px 0;
       position: absolute;
       z-index: 1;
-      top: 150%;
+      top: calc(100% + 8px);
       left: 50%;
       margin-left: -60px;
     }
@@ -85,12 +90,36 @@ export class EzTimeline extends LitElement {
   pathTemplate(path: ITimeLinePath): TemplateResult {
     if (path.collapsed) {
       this.pathsIndex++;
-    } else {
-      //this.pathsIndex--;
     }
     return html`
       ${path.timelineItems.map(
         (item) => html` ${this.itemTemplate(item, path.collapsed)} `
+      )}
+    `;
+  }
+
+  drawCellsTemplate(timelines: ITimeLinePath[]) {
+    const {total, paths, blocks} = countCells(this, timelines);
+    let indexes: number[] = [];
+    for (let i = 0; i < total; i++) {
+      indexes = [...indexes, i];
+    }
+    console.log(indexes.length);
+    return html`
+      ${indexes.map(
+        (i) =>
+          html`<div
+            class="timeline__cell"
+            style=${getTimelineCellStyle(
+              i,
+              paths,
+              blocks,
+              this.orientation,
+              this.border
+            )}
+          >
+            &nbsp;
+          </div>`
       )}
     `;
   }
@@ -104,6 +133,7 @@ export class EzTimeline extends LitElement {
     const styles = getTimelinePathStyle(this, timelines);
     return html`
       <div class="timeline__scale" style=${styles}>
+        ${this.drawCellsTemplate(timelines)}
         ${indexes.map(
           (i, index) => html`<div
             class="timeline__scale_marker"
