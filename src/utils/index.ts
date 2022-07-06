@@ -20,14 +20,18 @@ export const updateChildrenTimeElement = (
 };
 
 export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
-  [...children].map((node) => ({
-    start: Number(node.getAttribute('start')),
-    end: Number(node.getAttribute('end')),
-    content: node.innerHTML,
-  }));
+  [...children].map((node) => {
+    const background = node.getAttribute('background');
+    return {
+      start: Number(node.getAttribute('start')),
+      end: Number(node.getAttribute('end')),
+      background: background ? background : 'gray',
+      content: node.innerHTML,
+    };
+  });
 
-export const getTimelineItemPath = ({start, end, step}: ITimeElement) =>
-  (end - start) / step + 1;
+export const getTimelineItemPath = ({start, end}: ITimeElement) =>
+  end - start + 1;
 
 export const getTimelinePathStyle = (timeElement: ITimeElement) =>
   styleMap({
@@ -35,23 +39,20 @@ export const getTimelinePathStyle = (timeElement: ITimeElement) =>
     gridTemplateColumns: '1fr '.repeat(getTimelineItemPath(timeElement)),
   });
 
-export const getTimelineItemPosition = (
-  start: number,
-  step: number,
-  value: number
-) => Math.floor((value - start) / step) + 1;
+export const getTimelineItemPosition = (start: number, value: number) =>
+  Math.floor(value - start) + 1;
 
 export const getTimelineItemStyle = (
-  {start, end}: ITimelineItem,
-  {start: begin, step}: ITimeElement,
+  {start, end, background}: ITimelineItem,
+  {start: begin}: ITimeElement,
   index: number,
   isCollapsed: boolean
 ) =>
   styleMap({
     gridRow: `${isCollapsed ? 1 : index + 1}`,
-    background: 'rgba(255,255, 0, 10%)',
-    gridColumn: `${getTimelineItemPosition(begin, step, start)} / ${
-      getTimelineItemPosition(begin, step, end) + 1
+    background: background,
+    gridColumn: `${getTimelineItemPosition(begin, start)} / ${
+      getTimelineItemPosition(begin, end) + 1
     }`,
   });
 
@@ -64,3 +65,9 @@ export const getTimelinePaths = (children: HTMLCollection): ITimeLinePath[] => {
     };
   });
 };
+
+export const getTimeLineScale = (index: number, step: number) =>
+  styleMap({
+    gridRow: `1`,
+    gridColumn: `${index * step + 1} / ${(index + 1) * step + 1}`,
+  });

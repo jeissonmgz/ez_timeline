@@ -8,6 +8,7 @@ export interface ITimelineItem {
   start: number;
   end: number;
   content: string;
+  background: string;
 }
 
 export interface ITimeLinePath {

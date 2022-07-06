@@ -2,7 +2,6 @@
 
 Genrate timelines with web components.
 
-
 ## Tech Stack
 
 **Client:** TypeScript, Lit
@@ -34,6 +33,7 @@ npm run build:watch
 ## Testing
 
 To do
+
 ## Dev Server
 
 To run the dev server and open the project in a new browser tab:
@@ -61,4 +61,3 @@ npm run lint
 [Prettier](https://prettier.io/) is used for code formatting. It has been pre-configured according to the Lit's style. You can change this in `.prettierrc.json`.
 
 Prettier has not been configured to run when committing files, but this can be added with Husky and and `pretty-quick`. See the [prettier.io](https://prettier.io/) site for instructions.
-

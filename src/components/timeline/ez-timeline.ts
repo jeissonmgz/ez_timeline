@@ -5,6 +5,7 @@ import {
   getTimelineItemStyle,
   getTimelinePaths,
   getTimelinePathStyle,
+  getTimeLineScale,
 } from '../../utils';
 
 /**
@@ -63,7 +64,12 @@ export class EzTimeline extends LitElement {
     return html`
       <div class="timeline__scale" style=${styles}>
         ${indexes.map(
-          (i) => html`<div class="timeline__scale_marker">${i}</div>`
+          (i, index) => html`<div
+            class="timeline__scale_marker"
+            style=${getTimeLineScale(index, this.step)}
+          >
+            ${i}
+          </div>`
         )}
       </div>
       ${timelines.map((path) => html` ${this.pathTemplate(path)} `)}
