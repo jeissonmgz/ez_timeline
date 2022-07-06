@@ -1,5 +1,8 @@
 # Timeline
 
+## 0.0.9
+- Last item on timeline with space
+
 ## 0.0.8
 - Define steps on show timeline
 

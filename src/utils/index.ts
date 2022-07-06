@@ -30,8 +30,8 @@ export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
     };
   });
 
-export const getTimelineItemPath = ({start, end}: ITimeElement) =>
-  end - start + 1;
+export const getTimelineItemPath = ({start, end, step}: ITimeElement) =>
+  end - start + 1 + step;
 
 export const getTimelinePathStyle = (timeElement: ITimeElement) =>
   styleMap({
