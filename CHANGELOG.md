@@ -1,5 +1,11 @@
 # Timeline
 
+## 0.0.7
+- Remove files
+
+## 0.0.6
+- Implement github action to publish on npm
+
 ## 0.0.5
 - Remove button unnecesary
 - Clear vulnerabilities
