@@ -31,6 +31,7 @@ export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
       start: Number(node.getAttribute('start')),
       end: Number(node.getAttribute('end')),
       background: background ? background : 'gray',
+      noWrap: node.hasAttribute('no_wrap'),
       content: node.innerHTML,
     };
   });

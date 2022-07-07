@@ -58,6 +58,11 @@ export class EzTimeline extends LitElement {
       margin-left: -60px;
     }
 
+    .nowrap {
+      position: absolute;
+      width: max-content;
+    }
+
     .tooltip .tooltiptext::after {
       content: '';
       position: absolute;
@@ -83,7 +88,9 @@ export class EzTimeline extends LitElement {
       <div
         class="timeline__item tooltip"
         style=${styles}
-        .innerHTML="${item.content}<span class='tooltiptext'>${item.start} - ${item.end}</span>"
+        .innerHTML="<span class='${item.noWrap
+          ? 'nowrap'
+          : ''}'>${item.content}</span><span class='tooltiptext'>${item.start} - ${item.end}</span>"
       ></div>
     `;
   }

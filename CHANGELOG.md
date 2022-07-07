@@ -1,5 +1,9 @@
 # Timeline
 
+## 0.0.14
+
+- Allow no wrap text on block
+
 ## 0.0.13
 
 - Best performance draw grids

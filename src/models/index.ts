@@ -14,6 +14,7 @@ export interface ITimelineItem {
   end: number;
   content: string;
   background: string;
+  noWrap: boolean;
 }
 
 export interface ITimeLinePath {
