@@ -1,14 +1,9 @@
-import {LitElement, html, TemplateResult, css} from 'lit';
+import {LitElement, css, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
-import {EOrientationTimeLine, ITimelineItem, ITimeLinePath} from '../../models';
-import {
-  countCells,
-  getTimelineCellStyle,
-  getTimelineItemStyle,
-  getTimelinePaths,
-  getTimelinePathStyle,
-  getTimeLineScale,
-} from '../../utils';
+import {EOrientationTimeLine, ITimelineItem} from '../../models';
+import {getTimelineItemStyle} from '../../utils';
+import {TimelineHorizontal} from './timeline-horizontal';
+import {TimelineVertical} from './timeline-vertical';
 
 /**
  * Timeline
@@ -28,8 +23,14 @@ export class EzTimeline extends LitElement {
   @property({type: Number, reflect: true})
   step = 2;
 
+  @property({type: Number, reflect: true})
+  semistep = 0;
+
   @property({type: String, reflect: true})
-  border = '0.5px dotted lightgray';
+  borderGrid = '0.5px dotted gray';
+
+  @property({type: String, reflect: true})
+  borderSmallGrid = '0.5px dotted lightgray';
 
   @property({type: Array})
   timelines: ITimelineItem[][] = [];
@@ -87,71 +88,14 @@ export class EzTimeline extends LitElement {
     `;
   }
 
-  pathTemplate(path: ITimeLinePath): TemplateResult {
-    if (path.collapsed) {
-      this.pathsIndex++;
-    }
-    return html`
-      ${path.timelineItems.map(
-        (item) => html` ${this.itemTemplate(item, path.collapsed)} `
-      )}
-    `;
-  }
-
-  drawCellsTemplate(timelines: ITimeLinePath[]) {
-    const {total, paths, blocks} = countCells(this, timelines);
-    let indexes: number[] = [];
-    for (let i = 0; i < total; i++) {
-      indexes = [...indexes, i];
-    }
-    if (this.border === "") {
-      return html``;
-    }
-    return html`
-      ${indexes.map(
-        (i) =>
-          html`<div
-            class="timeline__cell"
-            style=${getTimelineCellStyle(
-              i,
-              paths,
-              blocks,
-              this.orientation,
-              this.border
-            )}
-          >
-            &nbsp;
-          </div>`
-      )}
-    `;
+  getDrawer() {
+    return this.orientation === EOrientationTimeLine.horizontal
+      ? new TimelineHorizontal(this)
+      : new TimelineVertical(this);
   }
 
   override render() {
-    const timelines = getTimelinePaths(this.children);
-    let indexes: number[] = [];
-    for (let i = this.start; i <= this.end; i += this.step) {
-      indexes = [...indexes, i];
-    }
-    const styles = getTimelinePathStyle(this, timelines);
-    return html`
-      <div class="timeline__scale" style=${styles}>
-        ${this.drawCellsTemplate(timelines)}
-        ${indexes.map(
-          (i, index) => html`<div
-            class="timeline__scale_marker"
-            style=${getTimeLineScale(
-              index,
-              this.step,
-              this.pathsIndex,
-              this.orientation
-            )}
-          >
-            ${i}
-          </div>`
-        )}
-        ${timelines.map((path) => html` ${this.pathTemplate(path)} `)}
-      </div>
-    `;
+    return this.getDrawer().draw();
   }
 }
 

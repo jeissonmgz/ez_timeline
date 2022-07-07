@@ -1,5 +1,10 @@
 # Timeline
 
+## 0.0.13
+
+- Best performance draw grids
+- Separate timelines by orientation with factory
+
 ## 0.0.12
 
 - Remove borders on clear property

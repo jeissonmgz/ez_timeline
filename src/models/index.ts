@@ -5,6 +5,10 @@ export interface ITimeElement {
   orientation: EOrientationTimeLine;
 }
 
+export interface ITimelineDrawer {
+  draw(): void;
+}
+
 export interface ITimelineItem {
   start: number;
   end: number;

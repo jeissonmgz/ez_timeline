@@ -128,29 +128,62 @@ export const getTimeLineScale = (
   );
 };
 
-export const getTimelineCellStyle = (
-  total: number,
+export const getTimelineColumnsStyle = (
+  index: number,
   paths: number,
   blocks: number,
+  step: number,
   orientation: EOrientationTimeLine,
   border: string
 ) => {
   const styleDefault = {
     width: '100%',
-    height: '100%',
+    minHeight: '0.1px',
     border: `${border}`,
+    borderTopStyle: 'none',
+    borderBottomStyle: 'none',
   };
   return styleMap(
     orientation === EOrientationTimeLine.horizontal
       ? {
           ...styleDefault,
-          gridColumn: `${(total % blocks) + 1}`,
-          gridRow: `${Math.floor(total / blocks) + 1}`,
+          gridColumn: `${index * step + 1} / ${(index + 1) * step + 1}`,
+          gridRow: `1 / ${paths + 1}`,
         }
       : {
           ...styleDefault,
-          gridColumn: `${(total % paths) + 1}`,
-          gridRow: `${Math.floor(total / paths) + 1}`,
+          gridColumn: `${index + 1}`,
+          gridRow: `1 / ${blocks + 1}`,
+        }
+  );
+};
+
+export const getTimelineRowsStyle = (
+  index: number,
+  paths: number,
+  blocks: number,
+  step: number,
+  orientation: EOrientationTimeLine,
+  border: string
+) => {
+  const styleDefault = {
+    width: '100%',
+    minHeight: '0.1px',
+    border: `${border}`,
+    borderRightStyle: 'none',
+    borderLeftStyle: 'none',
+  };
+  return styleMap(
+    orientation === EOrientationTimeLine.horizontal
+      ? {
+          ...styleDefault,
+          gridColumn: `1 / ${blocks}`,
+          gridRow: `${index + 1}`,
+        }
+      : {
+          ...styleDefault,
+          gridColumn: `1 / ${paths + 1}`,
+          gridRow: `${index * step + 1} / ${(index + 1) * step + 1}`,
         }
   );
 };
