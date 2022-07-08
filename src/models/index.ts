@@ -15,9 +15,11 @@ export interface ITimelineItem {
   content: string;
   background: string;
   noWrap: boolean;
+  hideTooltip: boolean;
 }
 
 export interface ITimeLinePath {
+  title: string | null;
   collapsed: boolean;
   timelineItems: ITimelineItem[];
 }

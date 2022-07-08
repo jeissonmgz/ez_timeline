@@ -1,5 +1,5 @@
 import {html, TemplateResult} from 'lit';
-import {ITimelineDrawer, ITimeLinePath} from '../../models';
+import {ITimelineDrawer, ITimelineItem, ITimeLinePath} from '../../../models';
 import {
   countCells,
   getTimelineColumnsStyle,
@@ -7,38 +7,58 @@ import {
   getTimelinePathStyle,
   getTimelineRowsStyle,
   getTimeLineScale,
-} from '../../utils';
-import {EzTimeline} from './ez-timeline';
+} from '../../../utils';
+import {EzTimeline} from '../ez-timeline';
 
-export class TimelineVertical implements ITimelineDrawer {
+export class TimelineHorizontalDrawer implements ITimelineDrawer {
+  
+  total = 0;
+  paths = 0;
+  blocks = 0;
+  
   constructor(private timeline: EzTimeline) {}
 
-  pathTemplate(path: ITimeLinePath): TemplateResult {
+  private titleTemplate(title: string | null): TemplateResult {
+    if (!title) return html``;
+    const item: ITimelineItem = {
+      hideTooltip: true,
+      start: this.timeline.start,
+      end: this.timeline.start + this.blocks,
+      content: title,
+      background: 'darkgray',
+      noWrap: false
+    }
+    return html`
+    ${this.timeline.itemTemplate(item, false)}
+    `;
+  }
+
+  private pathTemplate(path: ITimeLinePath): TemplateResult {
     if (path.collapsed) {
       this.timeline.pathsIndex++;
     }
     return html`
+      ${this.titleTemplate(path.title)}
       ${path.timelineItems.map(
         (item) => html` ${this.timeline.itemTemplate(item, path.collapsed)} `
       )}
     `;
   }
 
-  drawSmallGridTemplate(timelines: ITimeLinePath[]) {
-    const {total, paths, blocks} = countCells(this.timeline, timelines);
+  private drawSmallGridTemplate() {
     let indexes: number[] = [];
-    for (let i = 0; i < total; i++) {
+    for (let i = 0; i < this.total; i++) {
       indexes = [...indexes, i];
     }
     if (this.timeline.semistep === 0) {
       return html``;
     }
     return html`
-      ${[...Array(Math.floor(blocks / this.timeline.semistep))].map((__, i) =>
-        this.drawGridXTemplate(
+      ${[...Array(Math.floor(this.blocks / this.timeline.semistep))].map((__, i) =>
+        this.drawGridYTemplate(
           i,
-          paths,
-          blocks,
+          this.paths,
+          this.blocks,
           this.timeline.semistep,
           this.timeline.borderSmallGrid
         )
@@ -46,7 +66,7 @@ export class TimelineVertical implements ITimelineDrawer {
     `;
   }
 
-  drawGridYTemplate(
+  private drawGridYTemplate(
     index: number,
     paths: number,
     blocks: number,
@@ -66,7 +86,7 @@ export class TimelineVertical implements ITimelineDrawer {
     ></div>`;
   }
 
-  drawGridXTemplate(
+  private drawGridXTemplate(
     index: number,
     paths: number,
     blocks: number,
@@ -86,38 +106,37 @@ export class TimelineVertical implements ITimelineDrawer {
     ></div>`;
   }
 
-  drawGridTemplate(timelines: ITimeLinePath[]) {
-    const {total, paths, blocks} = countCells(this.timeline, timelines);
+  private drawGridTemplate() {
     let indexes: number[] = [];
-    for (let i = 0; i < total; i++) {
+    for (let i = 0; i < this.total; i++) {
       indexes = [...indexes, i];
     }
-    if (this.timeline.borderGrid === '') {
+    if (this.timeline.borderPath === '') {
       return html``;
     }
     return html`
-      ${[...Array(paths)].map((__, i) =>
+      ${[...Array(Math.floor(this.blocks / this.timeline.step))].map((__, i) =>
         this.drawGridYTemplate(
           i,
-          paths,
-          blocks,
+          this.paths,
+          this.blocks,
           this.timeline.step,
-          this.timeline.borderGrid
+          this.timeline.borderBlock
         )
       )}
-      ${[...Array(Math.floor(blocks / this.timeline.step))].map((__, i) =>
+      ${[...Array(this.paths)].map((__, i) =>
         this.drawGridXTemplate(
           i,
-          paths,
-          blocks,
+          this.paths,
+          this.blocks,
           this.timeline.step,
-          this.timeline.borderGrid
+          this.timeline.borderPath
         )
       )}
     `;
   }
 
-  draw() {
+  public draw() {
     const timelines = getTimelinePaths(this.timeline.children);
     let indexes: number[] = [];
     for (
@@ -128,10 +147,15 @@ export class TimelineVertical implements ITimelineDrawer {
       indexes = [...indexes, i];
     }
     const styles = getTimelinePathStyle(this.timeline, timelines);
+    const {total, paths, blocks} = countCells(this.timeline, timelines);
+  
+    this.total = total;
+    this.paths = paths;
+    this.blocks = blocks;
     return html`
       <div class="timeline__scale" style=${styles}>
-        ${this.drawSmallGridTemplate(timelines)}
-        ${this.drawGridTemplate(timelines)}
+        ${this.drawSmallGridTemplate()}
+        ${this.drawGridTemplate()}
         ${indexes.map(
           (i, index) => html`<div
             class="timeline__scale_marker"

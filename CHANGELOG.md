@@ -1,5 +1,11 @@
 # Timeline
 
+## 0.0.15
+
+- Allow different borders colors on block and path separators
+- Change name to drawer's timelines
+- Add title on path to timeline horizontal
+
 ## 0.0.14
 
 - Allow no wrap text on block

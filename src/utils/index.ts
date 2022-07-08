@@ -30,9 +30,10 @@ export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
     return {
       start: Number(node.getAttribute('start')),
       end: Number(node.getAttribute('end')),
-      background: background ? background : 'gray',
+      background: background ? background : 'lightgray',
       noWrap: node.hasAttribute('no_wrap'),
       content: node.innerHTML,
+      hideTooltip: node.hasAttribute('hideTooltip')
     };
   });
 
@@ -53,7 +54,7 @@ export const countBlocks = ({start, end}: ITimeElement) => end - start + 1;
 
 export const countPaths = (timelines: ITimeLinePath[]) => {
   return timelines.reduce(
-    (total, path) => total + (path.collapsed ? 1 : path.timelineItems.length),
+    (total, path) => total + (path.collapsed ? 1 : path.timelineItems.length) + (path.title? 1 : 0),
     1
   );
 };
@@ -102,6 +103,7 @@ export const getTimelinePaths = (children: HTMLCollection): ITimeLinePath[] => {
   return [...children].map((path) => {
     const pathNode = path as unknown as HTMLElement;
     return {
+      title: pathNode.getAttribute('title'),
       collapsed: pathNode.hasAttribute('collapsed'),
       timelineItems: getTimelineItems(pathNode.children),
     };

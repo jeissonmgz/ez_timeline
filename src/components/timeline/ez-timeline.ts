@@ -2,8 +2,8 @@ import {LitElement, css, TemplateResult, html} from 'lit';
 import {customElement, property} from 'lit/decorators.js';
 import {EOrientationTimeLine, ITimelineItem} from '../../models';
 import {getTimelineItemStyle} from '../../utils';
-import {TimelineHorizontal} from './timeline-horizontal';
-import {TimelineVertical} from './timeline-vertical';
+import {TimelineHorizontalDrawer} from './utils/timeline-horizontal-drawer';
+import {TimelineVerticalDrawer} from './utils/timeline-vertical-drawer';
 
 /**
  * Timeline
@@ -27,7 +27,10 @@ export class EzTimeline extends LitElement {
   semistep = 0;
 
   @property({type: String, reflect: true})
-  borderGrid = '0.5px dotted gray';
+  borderPath = '0.5px dotted gray';
+
+  @property({type: String, reflect: true})
+  borderBlock = '0.5px dotted black';
 
   @property({type: String, reflect: true})
   borderSmallGrid = '0.5px dotted lightgray';
@@ -84,21 +87,22 @@ export class EzTimeline extends LitElement {
       this.pathsIndex++;
     }
     const styles = getTimelineItemStyle(item, this, this.pathsIndex);
+    const tooltip = item.hideTooltip? '': `<span class='tooltiptext'>${item.start} - ${item.end}</span>`;
     return html`
       <div
         class="timeline__item tooltip"
         style=${styles}
         .innerHTML="<span class='${item.noWrap
           ? 'nowrap'
-          : ''}'>${item.content}</span><span class='tooltiptext'>${item.start} - ${item.end}</span>"
+          : ''}'>${item.content}${tooltip}</span>"
       ></div>
     `;
   }
 
   getDrawer() {
     return this.orientation === EOrientationTimeLine.horizontal
-      ? new TimelineHorizontal(this)
-      : new TimelineVertical(this);
+      ? new TimelineHorizontalDrawer(this)
+      : new TimelineVerticalDrawer(this);
   }
 
   override render() {
