@@ -11,11 +11,10 @@ import {
 import {EzTimeline} from '../ez-timeline';
 
 export class TimelineHorizontalDrawer implements ITimelineDrawer {
-  
   total = 0;
   paths = 0;
   blocks = 0;
-  
+
   constructor(private timeline: EzTimeline) {}
 
   private titleTemplate(title: string | null): TemplateResult {
@@ -26,11 +25,9 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
       end: this.timeline.start + this.blocks,
       content: title,
       background: 'darkgray',
-      noWrap: false
-    }
-    return html`
-    ${this.timeline.itemTemplate(item, false)}
-    `;
+      noWrap: false,
+    };
+    return html` ${this.timeline.itemTemplate(item, false)} `;
   }
 
   private pathTemplate(path: ITimeLinePath): TemplateResult {
@@ -54,14 +51,15 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
       return html``;
     }
     return html`
-      ${[...Array(Math.floor(this.blocks / this.timeline.semistep))].map((__, i) =>
-        this.drawGridYTemplate(
-          i,
-          this.paths,
-          this.blocks,
-          this.timeline.semistep,
-          this.timeline.borderSmallGrid
-        )
+      ${[...Array(Math.floor(this.blocks / this.timeline.semistep))].map(
+        (__, i) =>
+          this.drawGridYTemplate(
+            i,
+            this.paths,
+            this.blocks,
+            this.timeline.semistep,
+            this.timeline.borderSmallGrid
+          )
       )}
     `;
   }
@@ -148,14 +146,13 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
     }
     const styles = getTimelinePathStyle(this.timeline, timelines);
     const {total, paths, blocks} = countCells(this.timeline, timelines);
-  
+
     this.total = total;
     this.paths = paths;
     this.blocks = blocks;
     return html`
       <div class="timeline__scale" style=${styles}>
-        ${this.drawSmallGridTemplate()}
-        ${this.drawGridTemplate()}
+        ${this.drawSmallGridTemplate()} ${this.drawGridTemplate()}
         ${indexes.map(
           (i, index) => html`<div
             class="timeline__scale_marker"

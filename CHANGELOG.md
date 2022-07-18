@@ -1,5 +1,9 @@
 # Timeline
 
+## 0.1.0
+
+- Draw genealogies diagram
+
 ## 0.0.15
 
 - Allow different borders colors on block and path separators

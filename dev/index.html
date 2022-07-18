@@ -15,6 +15,153 @@
     </style>
   </head>
   <body>
+    <ez-genealogy>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="1"
+          name="Anquises"
+          couples=""
+          father=""
+          mother=""
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="5"
+          name="Priamo"
+          couples=""
+          father=""
+          mother=""
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="12"
+          name="Marte"
+          couples=""
+          father=""
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="2"
+          name="Eneas"
+          couples=""
+          father="1"
+          mother=""
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="4"
+          name="Creúsa"
+          couples=""
+          father="5"
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="6"
+          name="Ascanio"
+          couples=""
+          father="2"
+          mother="4"
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="13"
+          name="Proca"
+          couples=""
+          father="6"
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="7"
+          name="Numitor"
+          couples=""
+          father="13"
+          mother=""
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="8"
+          name="Amulio"
+          couples=""
+          father="13"
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="9"
+          name="Rea Silva"
+          couples=""
+          father="7"
+          mother=""
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="15"
+          name="Hersilio"
+          couples=""
+          father=""
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="10"
+          name="Romulo"
+          couples=""
+          father="12"
+          mother="9"
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="11"
+          name="Remo"
+          couples=""
+          father="12"
+          mother="9"
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="14"
+          name="Hersilia"
+          couples=""
+          father="15"
+          mother=""
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="18"
+          name="Hostio Hostilio"
+          couples=""
+          father=""
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="16"
+          name="?"
+          couples=""
+          father="10"
+          mother="14"
+        ></ez-genealogy-person>
+        <ez-genealogy-person
+          id="17"
+          name="? Hostilio"
+          couples=""
+          father="18"
+          mother="14"
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+      <ez-genealogy-level>
+        <ez-genealogy-person
+          id="19"
+          name="Tulio Hostilio"
+          couples=""
+          father="17"
+          mother=""
+        ></ez-genealogy-person>
+      </ez-genealogy-level>
+    </ez-genealogy>
+
     <my-element>
       <p>This is child content</p>
     </my-element>
@@ -83,13 +230,10 @@
       </ez-timeline-path>
     </ez-timeline>
     <h1>Reyes de Roma</h1>
-    <ez-timeline
-      start="-753"
-      end="-509"
-      step="20"
-      semistep="5"
-    >
-      <ez-timeline-path title="<div style='text-align:center; width: 100%;'>hello</div>">
+    <ez-timeline start="-753" end="-509" step="20" semistep="5">
+      <ez-timeline-path
+        title="<div style='text-align:center; width: 100%;'>hello</div>"
+      >
         <ez-timeline-item start="-753" end="-716">Rómulo</ez-timeline-item>
         <ez-timeline-item start="-715" end="-672"
           >Numa Pompilio</ez-timeline-item

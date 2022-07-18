@@ -33,7 +33,7 @@ export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
       background: background ? background : 'lightgray',
       noWrap: node.hasAttribute('no_wrap'),
       content: node.innerHTML,
-      hideTooltip: node.hasAttribute('hideTooltip')
+      hideTooltip: node.hasAttribute('hideTooltip'),
     };
   });
 
@@ -54,7 +54,10 @@ export const countBlocks = ({start, end}: ITimeElement) => end - start + 1;
 
 export const countPaths = (timelines: ITimeLinePath[]) => {
   return timelines.reduce(
-    (total, path) => total + (path.collapsed ? 1 : path.timelineItems.length) + (path.title? 1 : 0),
+    (total, path) =>
+      total +
+      (path.collapsed ? 1 : path.timelineItems.length) +
+      (path.title ? 1 : 0),
     1
   );
 };
