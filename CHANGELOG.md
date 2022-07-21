@@ -1,5 +1,11 @@
 # Timeline
 
+## 0.2.0
+
+- Draw maps with svg elements into coordinates
+- Add custom width and height to genealogy
+- Fix git emoji last commit
+
 ## 0.1.0
 
 - Draw genealogies diagram

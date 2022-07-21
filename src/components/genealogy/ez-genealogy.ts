@@ -1,5 +1,5 @@
 import {LitElement, svg} from 'lit';
-import {customElement} from 'lit/decorators.js';
+import {customElement, property} from 'lit/decorators.js';
 
 interface IRelationshipPosition {
   id: string;
@@ -42,29 +42,45 @@ interface IGenealogyItem {
 }
 
 /**
- * Timeline
+ * Genealogy
  *
  */
 @customElement('ez-genealogy')
 export class EzGenealogy extends LitElement {
   treeFamily: IGenealogyItem[][] = [];
 
+  @property({type: String, reflect: true})
   lineStyle = 'stroke:black;stroke-width:1';
 
+  @property({type: String, reflect: true})
+  width = '1000px';
+
+  @property({type: String, reflect: true})
+  height = '900px';
+
+  @property({type: Number, reflect: true})
   widthItem = 150;
 
+  @property({type: Number, reflect: true})
   heightItem = 30;
 
   spanY = 0; //(spanItemY * 3) + (spanRelationships * 2)
 
+  @property({type: Number, reflect: true})
   spanItemY = 5; //x3 (arriba, medio, bajo), total
+
+  @property({type: Number, reflect: true})
   spanRelationships = 15; //x2 (arriba, abajo)
 
+  @property({type: Number, reflect: true})
   spanX = 30;
 
+  @property({type: Number, reflect: true})
   spanItemX = 50; // total a usar = 150 - (50 * 2) = 50;
 
   maxOrder = 0;
+
+  @property({type: Number, reflect: true})
   px = 20;
 
   drawNode(person: IPersonPosition) {
@@ -636,7 +652,7 @@ style=${this.lineStyle}
       0
     );
     return svg`
-    <svg width="1000px" height="900px">
+    <svg width=${this.width} height=${this.height}>
     ${relationshipsByLevel.map((relationships) =>
       relationships.map((relationship, relationshipNumber) =>
         this.drawRelationships(
