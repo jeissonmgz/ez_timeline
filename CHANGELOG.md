@@ -1,5 +1,9 @@
 # Timeline
 
+## 0.2.3
+
+- Fix collapsed path in timeline horizontal
+
 ## 0.2.2
 
 - Add color to title path in timeline

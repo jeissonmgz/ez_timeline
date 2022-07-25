@@ -33,7 +33,7 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
 
   private pathTemplate(path: ITimeLinePath): TemplateResult {
     const titleRow = this.titleTemplate(path);
-    if (path.collapsed && path.title) {
+    if (path.collapsed) {
       this.timeline.pathsIndex++;
     }
     return html`
