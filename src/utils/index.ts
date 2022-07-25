@@ -27,12 +27,14 @@ export const updateChildrenTimeElement = (
 export const getTimelineItems = (children: HTMLCollection): ITimelineItem[] =>
   [...children].map((node) => {
     const background = node.getAttribute('background');
+    const color = (node.hasAttribute('color')? node.getAttribute('color'): 'black') as string;
     return {
       start: Number(node.getAttribute('start')),
       end: Number(node.getAttribute('end')),
       background: background ? background : 'lightgray',
       noWrap: node.hasAttribute('no_wrap'),
       content: node.innerHTML,
+      color: color,
       hideTooltip: node.hasAttribute('hideTooltip'),
     };
   });

@@ -14,6 +14,7 @@ export interface ITimelineItem {
   end: number;
   content: string;
   background: string;
+  color: string;
   noWrap: boolean;
   hideTooltip: boolean;
 }

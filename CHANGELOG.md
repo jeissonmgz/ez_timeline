@@ -1,5 +1,10 @@
 # Timeline
 
+## 0.2.1
+
+- Add color to item in timeline
+- Fix title different line in path when is collapsed
+
 ## 0.2.0
 
 - Draw maps with svg elements into coordinates

@@ -89,12 +89,12 @@ export class EzTimeline extends LitElement {
     const styles = getTimelineItemStyle(item, this, this.pathsIndex);
     const tooltip = item.hideTooltip
       ? ''
-      : `<span class='tooltiptext'>${item.start} - ${item.end}</span>`;
+      : `<span class='tooltiptext'>${item.start} a ${item.end}</span>`;
     return html`
       <div
         class="timeline__item tooltip"
         style=${styles}
-        .innerHTML="<span class='${item.noWrap
+        .innerHTML="<span style='${item.color}' class='${item.noWrap
           ? 'nowrap'
           : ''}'>${item.content}${tooltip}</span>"
       ></div>

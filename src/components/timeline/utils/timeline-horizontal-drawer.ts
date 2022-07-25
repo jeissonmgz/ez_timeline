@@ -24,6 +24,7 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
       start: this.timeline.start,
       end: this.timeline.start + this.blocks,
       content: title,
+      color: 'white',
       background: 'darkgray',
       noWrap: false,
     };
@@ -31,11 +32,12 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
   }
 
   private pathTemplate(path: ITimeLinePath): TemplateResult {
+    const titleRow = this.titleTemplate(path.title);
     if (path.collapsed) {
       this.timeline.pathsIndex++;
     }
     return html`
-      ${this.titleTemplate(path.title)}
+      ${titleRow}
       ${path.timelineItems.map(
         (item) => html` ${this.timeline.itemTemplate(item, path.collapsed)} `
       )}
