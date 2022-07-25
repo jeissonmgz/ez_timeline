@@ -21,6 +21,8 @@ export interface ITimelineItem {
 
 export interface ITimeLinePath {
   title: string | null;
+  color: string;
+  background: string;
   collapsed: boolean;
   timelineItems: ITimelineItem[];
 }

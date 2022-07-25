@@ -1,5 +1,9 @@
 # Timeline
 
+## 0.2.2
+
+- Add color to title path in timeline
+
 ## 0.2.1
 
 - Add color to item in timeline

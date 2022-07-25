@@ -94,7 +94,7 @@ export class EzTimeline extends LitElement {
       <div
         class="timeline__item tooltip"
         style=${styles}
-        .innerHTML="<span style='${item.color}' class='${item.noWrap
+        .innerHTML="<span style='color:${item.color}' class='${item.noWrap
           ? 'nowrap'
           : ''}'>${item.content}${tooltip}</span>"
       ></div>

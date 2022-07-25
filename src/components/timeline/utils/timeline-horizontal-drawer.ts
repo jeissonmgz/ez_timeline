@@ -17,23 +17,23 @@ export class TimelineHorizontalDrawer implements ITimelineDrawer {
 
   constructor(private timeline: EzTimeline) {}
 
-  private titleTemplate(title: string | null): TemplateResult {
-    if (!title) return html``;
+  private titleTemplate(path: ITimeLinePath): TemplateResult {
+    if (!path.title) return html``;
     const item: ITimelineItem = {
       hideTooltip: true,
       start: this.timeline.start,
       end: this.timeline.start + this.blocks,
-      content: title,
-      color: 'white',
-      background: 'darkgray',
+      content: path.title,
+      color: path.color,
+      background: path.background,
       noWrap: false,
     };
     return html` ${this.timeline.itemTemplate(item, false)} `;
   }
 
   private pathTemplate(path: ITimeLinePath): TemplateResult {
-    const titleRow = this.titleTemplate(path.title);
-    if (path.collapsed) {
+    const titleRow = this.titleTemplate(path);
+    if (path.collapsed && path.title) {
       this.timeline.pathsIndex++;
     }
     return html`

@@ -107,10 +107,14 @@ export const getTimelineItemStyle = (
 export const getTimelinePaths = (children: HTMLCollection): ITimeLinePath[] => {
   return [...children].map((path) => {
     const pathNode = path as unknown as HTMLElement;
+    const background = (pathNode.hasAttribute('background')? pathNode.getAttribute('background'): 'darkgray') as string
+    const color = (pathNode.hasAttribute('color')? pathNode.getAttribute('color'): 'black') as string;
     return {
       title: pathNode.getAttribute('title'),
       collapsed: pathNode.hasAttribute('collapsed'),
       timelineItems: getTimelineItems(pathNode.children),
+      color: color,
+      background: background
     };
   });
 };
